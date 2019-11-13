@@ -1,5 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
+import { sign } from 'crypto';
 
 /**
  * This class represent the user model
@@ -30,6 +31,10 @@ class User extends Model {
     });
 
     return this;
+  }
+
+  checkPassword(password) {
+    return bcrypt.compare(password, this.password_hash);
   }
 }
 
