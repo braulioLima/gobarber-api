@@ -1,6 +1,5 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
-import { sign } from 'crypto';
 
 /**
  * This class represent the user model
