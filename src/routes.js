@@ -41,6 +41,10 @@ routes.put('/users', UserController.update);
 routes.get('/providers', ProviderController.index);
 
 /**
+ * Return all appointments
+ */
+routes.get('/appointments', AppointmentController.index);
+/**
  * Create a appointment
  */
 routes.post('/appointments', AppointmentController.store);
