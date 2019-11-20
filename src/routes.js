@@ -62,6 +62,11 @@ routes.get('/schedule', ScheduleController.index);
 routes.get('/notifications', NotificationController.index);
 
 /**
+ * mark a notification with read
+ */
+routes.put('/notifications/:id', NotificationController.update);
+
+/**
  * Route to file upload
  */
 routes.post('/files', upload.single('file'), FileController.store);
