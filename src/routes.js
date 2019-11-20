@@ -7,6 +7,7 @@ import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
 import ProviderController from './app/controllers/ProviderController';
 import AppointmentController from './app/controllers/AppointmentController';
+import ScheduleController from './app/controllers/ScheduleController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -48,6 +49,11 @@ routes.get('/appointments', AppointmentController.index);
  * Create a appointment
  */
 routes.post('/appointments', AppointmentController.store);
+
+/**
+ * Route responsible to return all Schedules from provider
+ */
+routes.get('/schedule', ScheduleController.index);
 
 /**
  * Route to file upload
