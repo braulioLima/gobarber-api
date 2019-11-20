@@ -95,6 +95,9 @@ class AppointmentControler {
         .json({ error: 'Appointment date is not available' });
     }
 
+    /**
+     * Create appointment
+     */
     const appointment = await Appointment.create({
       user_id: req.userID,
       provider_id,
@@ -103,6 +106,9 @@ class AppointmentControler {
 
     const user = await User.findByPk(req.userID);
 
+    /**
+     * Date format and locale ptBR
+     */
     const formatedDate = format(
       hourStart,
       "'dia' dd 'de' MMMM', às' HH:mm'h'",
