@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { startOfHour, parseISO, isBefore, format } from 'date-fns';
+import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
 
 import ptBR from 'date-fns/locale/pt-BR';
 
@@ -70,6 +70,15 @@ class AppointmentControler {
     }
 
     /**
+     * Check if client have same id of provider
+     */
+    if (provider_id === req.userID) {
+      return res
+        .status(400)
+        .json({ error: "The id client's is the same of the provider" });
+    }
+
+    /**
      * Check for past dates
      */
     const hourStart = startOfHour(parseISO(date));
@@ -124,6 +133,39 @@ class AppointmentControler {
     });
 
     return res.status(201).json(appointment);
+  }
+
+  async delete(req, res) {
+    const appointment = await Appointment.findByPk(req.params.id);
+
+    /**
+     * verify if user loged is appointment's owner
+     */
+    if (appointment.user_id !== req.userID) {
+      return res.status(401).json({
+        error: "You don't have permission to cancel this appointment.",
+      });
+    }
+
+    /**
+     * Verify limit time to 2 hours before.
+     */
+    const dateWithSub = subHours(appointment.date, 2);
+
+    if (isBefore(dateWithSub, new Date())) {
+      return res.status(401).json({
+        error: 'You can only cancel appointments 2 hours in advance.',
+      });
+    }
+
+    /**
+     * Add datetime of cancel and save
+     */
+    appointment.canceled_at = new Date();
+
+    await appointment.save();
+
+    return res.json(appointment);
   }
 }
 

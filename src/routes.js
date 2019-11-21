@@ -52,6 +52,11 @@ routes.get('/appointments', AppointmentController.index);
 routes.post('/appointments', AppointmentController.store);
 
 /**
+ * Route resposible to make appointment cancelation
+ */
+routes.delete('/appointments/:id', AppointmentController.delete);
+
+/**
  * Route responsible to return all Schedules from provider
  */
 routes.get('/schedule', ScheduleController.index);
